@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبداع - منصة التصميم العربية</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B5DFF 0%, #00D4AA 100%);
+            color: white; text-align: center; 
+        }
+        nav { 
+            display: flex; justify-content: space-between; 
+            padding: 1rem 2rem; background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .logo { font-size: 2rem; font-weight: bold; }
+        .nav-links a { 
+            color: white; text-decoration: none; margin: 0 1rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #FFD700; }
+        .hero { padding: 8rem 2rem; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.5rem; margin-bottom: 2rem; opacity: 0.9; }
+        .cta-button {
+            background: #FF6B35; color: white; border: none;
+            padding: 1rem 2rem; font-size: 1.2rem; border-radius: 50px;
+            cursor: pointer; transition: transform 0.3s;
+        }
+        .cta-button:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">أَبْداع</div>
+            <div class="nav-links">
+                <a href="#">الرئيسية</a>
+                <a href="#">الميزات</a>
+                <a href="#">القوالب</a>
+                <a href="#">التسجيل</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>أبداع - منصة التصميم العربية</h1>
+        <p>حول أفكارك إلى تصاميم مذهلة بلغتك الأم</p>
+        <button class="cta-button">ابدأ التصميم مجاناً</button>
+    </section>
+</body>
+</html>
