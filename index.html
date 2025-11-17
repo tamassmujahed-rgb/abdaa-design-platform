@@ -3,229 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أبداع - منصة التصميم العربية</title>
+    <title>أبداع - أقوى من Canva</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #8B5DFF 0%, #00D4AA 100%);
-            color: white; 
-            height: 100vh;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
             display: flex;
-            flex-direction: column;
-        }
-        
-        /* الشريط العلوي */
-        nav { 
-            display: flex; 
-            justify-content: space-between; 
+            justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem; 
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .logo { 
-            font-size: 2rem; 
-            font-weight: bold; 
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .nav-links a { 
-            color: white; 
-            text-decoration: none; 
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
             margin: 0 1rem;
+            font-weight: 500;
             transition: color 0.3s;
         }
-        .nav-links a:hover { 
-            color: #FFD700; 
+
+        .nav-links a:hover {
+            color: #667eea;
         }
 
-        /* المحتوى الرئيسي */
-        .main-container {
-            display: flex;
-            flex: 1;
-            height: calc(100vh - 80px);
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
         }
 
-        /* الشريط الجانبي */
-        .sidebar {
-            width: 250px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
-            border-left: 1px solid rgba(255,255,255,0.1);
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .tool-btn {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: rgba(255,255,255,0.1);
-            border: none;
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #FF6B35, #FF8E53);
             color: white;
-            border-radius: 8px;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            border-radius: 50px;
             cursor: pointer;
-            text-align: right;
-            transition: all 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
         }
 
-        .tool-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateX(-5px);
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.6);
         }
 
-        /* منطقة العمل */
-        .workspace {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            margin: 1rem;
-            border-radius: 15px;
-            border: 2px dashed rgba(255,255,255,0.2);
-            position: relative;
-            overflow: hidden;
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        /* عناصر التصميم */
-        .design-element {
-            position: absolute;
-            cursor: move;
-            padding: 10px;
-            border: 1px solid transparent;
-            transition: border 0.3s;
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
         }
 
-        .design-element:hover {
-            border: 1px solid #FFD700;
+        .feature-card:hover {
+            transform: translateY(-10px);
         }
 
-        /* الخصائص */
-        .properties {
-            width: 300px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .property-group {
+        .feature-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .property-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .property-group input,
-        .property-group select {
-            width: 100%;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            background: rgba(255,255,255,0.1);
-            color: white;
+        .comparison {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .comparison h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .comparison-table {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .comparison-item {
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .abdaa-feature {
+            background: rgba(102, 126, 234, 0.2);
+            border: 2px solid #667eea;
         }
     </style>
 </head>
 <body>
     <!-- الشريط العلوي -->
-    <header>
-        <nav>
-            <div class="logo">أَبْداع</div>
-            <div class="nav-links">
-                <a href="#">الرئيسية</a>
-                <a href="#">الميزات</a>
-                <a href="#">القوالب</a>
-                <a href="#">التسجيل</a>
-            </div>
-        </nav>
-    </header>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="main-container">
-        <!-- الشريط الجانبي للأدوات -->
-        <div class="sidebar">
-            <h3>أدوات التصميم</h3>
-            <button class="tool-btn" onclick="addText()">✏️ إضافة نص</button>
-            <button class="tool-btn" onclick="addImage()">🖼️ إضافة صورة</button>
-            <button class="tool-btn" onclick="addShape()">⬜ إضافة شكل</button>
-            <button class="tool-btn" onclick="changeBackground()">🎨 تغيير الخلفية</button>
-            <button class="tool-btn" onclick="exportDesign()">📤 تصدير التصميم</button>
+    <nav class="navbar">
+        <div class="logo">أَبْداع</div>
+        <div class="nav-links">
+            <a href="#">الرئيسية</a>
+            <a href="#">المميزات</a>
+            <a href="#">المقارنة</a>
+            <a href="#">التسجيل</a>
         </div>
+    </nav>
 
-        <!-- منطقة العمل -->
-        <div class="workspace" id="workspace">
-            <!-- هنا سيتم إضافة عناصر التصميم -->
+    <!-- القسم الرئيسي -->
+    <section class="hero">
+        <h1>أبداع 🚀</h1>
+        <p>أول منصة تصميم عربية <strong>تتفوق على Canva</strong> في كل شيء</p>
+        <button class="cta-button">ابدأ مجاناً ←</button>
+    </section>
+
+    <!-- المميزات -->
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>واجهة أنظف</h3>
+            <p>تصميم بسيط وقوي بدون تعقيد</p>
         </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>أسرع أداء</h3>
+            <p>تحميل فوري وتصميم بدون تأخير</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>ذكاء اصطناعي</h3>
+            <p>مساعد تصميم عربي ذكي</p>
+        </div>
+    </section>
 
-        <!-- شريط الخصائص -->
-        <div class="properties">
-            <h3>خصائص العنصر</h3>
-            <div class="property-group">
-                <label>النص:</label>
-                <input type="text" id="textInput" placeholder="اكتب النص هنا...">
+    <!-- المقارنة -->
+    <section class="comparison">
+        <h2>لماذا أبداع أفضل من Canva؟</h2>
+        <div class="comparison-table">
+            <div class="comparison-item">
+                <h3>Canva</h3>
+                <p>واجهة معقدة</p>
+                <p>بطيء أحياناً</p>
+                <p>دعم عربي محدود</p>
             </div>
-            <div class="property-group">
-                <label>حجم الخط:</label>
-                <input type="range" id="fontSize" min="10" max="72" value="24">
+            <div class="comparison-item">
+                <h3>الميزة</h3>
+                <p>البساطة</p>
+                <p>السرعة</p>
+                <p>الدعم</p>
             </div>
-            <div class="property-group">
-                <label>لون النص:</label>
-                <input type="color" id="textColor" value="#ffffff">
-            </div>
-            <div class="property-group">
-                <label>لون الخلفية:</label>
-                <input type="color" id="backgroundColor" value="#8B5DFF">
+            <div class="comparison-item abdaa-feature">
+                <h3>أبداع</h3>
+                <p><strong>واجهة أنيقة</strong></p>
+                <p><strong>أداء فائق</strong></p>
+                <p><strong>دعم عربي كامل</strong></p>
             </div>
         </div>
-    </div>
-
-    <script>
-        let currentElement = null;
-
-        function addText() {
-            const element = document.createElement('div');
-            element.className = 'design-element';
-            element.contentEditable = true;
-            element.innerHTML = 'اكتب نصك هنا...';
-            element.style.cssText = `
-                position: absolute;
-                top: 50px;
-                left: 50px;
-                color: white;
-                font-size: 24px;
-                padding: 10px;
-                cursor: move;
-                border: 1px dashed rgba(255,255,255,0.5);
-            `;
-            
-            document.getElementById('workspace').appendChild(element);
-            makeDraggable(element);
-            selectElement(element);
-        }
-
-        function addImage() {
-            alert('ميزة إضافة الصور قريباً! 🤩');
-        }
-
-        function addShape() {
-            alert('ميزة إضافة الأشكال قريباً! 🎨');
-        }
-
-        function changeBackground() {
-            const color = document.getElementById('backgroundColor').value;
-            document.getElementById('workspace').style.background = color;
-        }
-
-        function exportDesign() {
-            alert('تم تصدير التصميم بنجاح! 📤');
-        }
-
-        function makeDraggable(element) {
-            // سيتم إضافة خاصية السحب لاحقاً
-        }
-
-        function selectElement(element) {
-            currentElement = element;
-        }
-    </script>
+    </section>
 </body>
 </html>
