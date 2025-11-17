@@ -9,31 +9,124 @@
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #8B5DFF 0%, #00D4AA 100%);
-            color: white; text-align: center; 
+            color: white; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+        
+        /* الشريط العلوي */
         nav { 
-            display: flex; justify-content: space-between; 
-            padding: 1rem 2rem; background: rgba(255,255,255,0.1);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 1rem 2rem; 
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
         }
-        .logo { font-size: 2rem; font-weight: bold; }
+        .logo { 
+            font-size: 2rem; 
+            font-weight: bold; 
+        }
         .nav-links a { 
-            color: white; text-decoration: none; margin: 0 1rem;
+            color: white; 
+            text-decoration: none; 
+            margin: 0 1rem;
             transition: color 0.3s;
         }
-        .nav-links a:hover { color: #FFD700; }
-        .hero { padding: 8rem 2rem; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.5rem; margin-bottom: 2rem; opacity: 0.9; }
-        .cta-button {
-            background: #FF6B35; color: white; border: none;
-            padding: 1rem 2rem; font-size: 1.2rem; border-radius: 50px;
-            cursor: pointer; transition: transform 0.3s;
+        .nav-links a:hover { 
+            color: #FFD700; 
         }
-        .cta-button:hover { transform: translateY(-5px); }
+
+        /* المحتوى الرئيسي */
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 80px);
+        }
+
+        /* الشريط الجانبي */
+        .sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-left: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tool-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: right;
+            transition: all 0.3s;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-5px);
+        }
+
+        /* منطقة العمل */
+        .workspace {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            margin: 1rem;
+            border-radius: 15px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* عناصر التصميم */
+        .design-element {
+            position: absolute;
+            cursor: move;
+            padding: 10px;
+            border: 1px solid transparent;
+            transition: border 0.3s;
+        }
+
+        .design-element:hover {
+            border: 1px solid #FFD700;
+        }
+
+        /* الخصائص */
+        .properties {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .property-group {
+            margin-bottom: 1rem;
+        }
+
+        .property-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .property-group input,
+        .property-group select {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- الشريط العلوي -->
     <header>
         <nav>
             <div class="logo">أَبْداع</div>
@@ -46,10 +139,93 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>أبداع - منصة التصميم العربية</h1>
-        <p>حول أفكارك إلى تصاميم مذهلة بلغتك الأم</p>
-        <button class="cta-button">ابدأ التصميم مجاناً</button>
-    </section>
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <!-- الشريط الجانبي للأدوات -->
+        <div class="sidebar">
+            <h3>أدوات التصميم</h3>
+            <button class="tool-btn" onclick="addText()">✏️ إضافة نص</button>
+            <button class="tool-btn" onclick="addImage()">🖼️ إضافة صورة</button>
+            <button class="tool-btn" onclick="addShape()">⬜ إضافة شكل</button>
+            <button class="tool-btn" onclick="changeBackground()">🎨 تغيير الخلفية</button>
+            <button class="tool-btn" onclick="exportDesign()">📤 تصدير التصميم</button>
+        </div>
+
+        <!-- منطقة العمل -->
+        <div class="workspace" id="workspace">
+            <!-- هنا سيتم إضافة عناصر التصميم -->
+        </div>
+
+        <!-- شريط الخصائص -->
+        <div class="properties">
+            <h3>خصائص العنصر</h3>
+            <div class="property-group">
+                <label>النص:</label>
+                <input type="text" id="textInput" placeholder="اكتب النص هنا...">
+            </div>
+            <div class="property-group">
+                <label>حجم الخط:</label>
+                <input type="range" id="fontSize" min="10" max="72" value="24">
+            </div>
+            <div class="property-group">
+                <label>لون النص:</label>
+                <input type="color" id="textColor" value="#ffffff">
+            </div>
+            <div class="property-group">
+                <label>لون الخلفية:</label>
+                <input type="color" id="backgroundColor" value="#8B5DFF">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentElement = null;
+
+        function addText() {
+            const element = document.createElement('div');
+            element.className = 'design-element';
+            element.contentEditable = true;
+            element.innerHTML = 'اكتب نصك هنا...';
+            element.style.cssText = `
+                position: absolute;
+                top: 50px;
+                left: 50px;
+                color: white;
+                font-size: 24px;
+                padding: 10px;
+                cursor: move;
+                border: 1px dashed rgba(255,255,255,0.5);
+            `;
+            
+            document.getElementById('workspace').appendChild(element);
+            makeDraggable(element);
+            selectElement(element);
+        }
+
+        function addImage() {
+            alert('ميزة إضافة الصور قريباً! 🤩');
+        }
+
+        function addShape() {
+            alert('ميزة إضافة الأشكال قريباً! 🎨');
+        }
+
+        function changeBackground() {
+            const color = document.getElementById('backgroundColor').value;
+            document.getElementById('workspace').style.background = color;
+        }
+
+        function exportDesign() {
+            alert('تم تصدير التصميم بنجاح! 📤');
+        }
+
+        function makeDraggable(element) {
+            // سيتم إضافة خاصية السحب لاحقاً
+        }
+
+        function selectElement(element) {
+            currentElement = element;
+        }
+    </script>
 </body>
 </html>
