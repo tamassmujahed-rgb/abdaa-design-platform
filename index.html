@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أبداع - منصة التصميم العربية</title>
-    <script src="https://unpkg.com/konva@8.4.0/konva.min.js"></script>
+    <title>أبداع - متجر القوالب العربية</title>
     <style>
         * {
             margin: 0;
@@ -22,21 +21,23 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
-            color: white;
-            min-height: 100vh;
+            background: #F8FAFC;
+            color: #1E1B4B;
+            line-height: 1.6;
         }
 
         /* شريط التنقل */
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            background: white;
             padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
@@ -49,7 +50,7 @@
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .nav-links a {
@@ -63,490 +64,404 @@
             color: var(--primary);
         }
 
-        /* المحتوى الرئيسي */
-        .main-container {
-            display: flex;
-            height: calc(100vh - 80px);
-        }
-
-        /* الشريط الجانبي */
-        .sidebar {
-            width: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-left: 1px solid rgba(255, 255, 255, 0.2);
-            overflow-y: auto;
-        }
-
-        .tool-section {
-            margin-bottom: 2rem;
-        }
-
-        .tool-section h3 {
-            color: var(--light);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .tool-btn {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.3rem 0;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* الهيرو */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
             color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: right;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tool-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(-5px);
-        }
-
-        /* منطقة العمل */
-        .workspace {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            margin: 1rem;
-            border-radius: 15px;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        #canvas-container {
-            width: 100%;
-            height: 100%;
-            background: white;
-            border-radius: 12px;
-        }
-
-        /* خصائص العناصر */
-        .properties-panel {
-            width: 280px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .property-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .property-group label {
-            display: block;
-            color: var(--light);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .property-group input,
-        .property-group select {
-            width: 100%;
-            padding: 0.6rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .color-palette {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .color-swatch {
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: transform 0.2s;
-        }
-
-        .color-swatch:hover {
-            transform: scale(1.1);
-        }
-
-        .color-swatch.active {
-            border-color: white;
-        }
-
-        /* القوالب */
-        .templates-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            margin-top: 1rem;
-        }
-
-        .template-item {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem;
+            padding: 8rem 2rem 4rem;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .template-item:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
             transform: translateY(-2px);
         }
 
-        .template-icon {
-            font-size: 2rem;
+        /* قسم المنتجات */
+        .products {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-description {
+            color: #64748B;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .buy-button:hover {
+            background: var(--secondary);
+        }
+
+        /* قسم المميزات */
+        .features {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* الفوتر */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        /* نموذج الشراء */
+        .purchase-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <!-- شريط التنقل -->
     <nav class="navbar">
-        <div class="logo">أَبْداع</div>
+        <div class="logo">أبداع</div>
         <div class="nav-links">
-            <a href="#" onclick="saveProject()">💾 حفظ</a>
-            <a href="#" onclick="loadProject()">📂 فتح</a>
-            <a href="#" onclick="exportDesign()">📤 تصدير</a>
-            <a href="welcome.html">🏠 الرئيسية</a>
+            <a href="#products">المنتجات</a>
+            <a href="#features">المميزات</a>
+            <a href="#contact">اتصل بنا</a>
         </div>
     </nav>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="main-container">
-        <!-- شريط الخصائص -->
-        <div class="properties-panel">
-            <h3>🎛️ خصائص العنصر</h3>
+    <!-- قسم الهيرو -->
+    <section class="hero">
+        <h1>متجر القوالب العربية الرقمية</h1>
+        <p>أول متجر عربي متخصص في بيع القوالب الجاهزة والمنتجات الرقمية للتصميم والمحتوى</p>
+        <button class="cta-button" onclick="scrollToProducts()">🚀 استعرض المنتجات</button>
+    </section>
+
+    <!-- قسم المنتجات -->
+    <section class="products" id="products">
+        <h2 class="section-title">🛍️ منتجاتنا الرقمية</h2>
+        <div class="products-grid">
             
-            <div class="property-group">
-                <label>النص:</label>
-                <input type="text" id="text-input" placeholder="اكتب النص هنا..." onchange="updateSelectedText()">
-            </div>
-
-            <div class="property-group">
-                <label>حجم الخط:</label>
-                <input type="range" id="font-size" min="10" max="72" value="24" onchange="updateFontSize()">
-                <span id="font-size-value">24px</span>
-            </div>
-
-            <div class="property-group">
-                <label>لون النص:</label>
-                <div class="color-palette">
-                    <div class="color-swatch active" style="background: #000000;" onclick="setTextColor('#000000')"></div>
-                    <div class="color-swatch" style="background: #7C3AED;" onclick="setTextColor('#7C3AED')"></div>
-                    <div class="color-swatch" style="background: #06B6D4;" onclick="setTextColor('#06B6D4')"></div>
-                    <div class="color-swatch" style="background: #F59E0B;" onclick="setTextColor('#F59E0B')"></div>
-                    <div class="color-swatch" style="background: #059669;" onclick="setTextColor('#059669')"></div>
-                    <div class="color-swatch" style="background: #DC2626;" onclick="setTextColor('#DC2626')"></div>
-                    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ccc;" onclick="setTextColor('#FFFFFF')"></div>
-                    <div class="color-swatch" style="background: #6B7280;" onclick="setTextColor('#6B7280')"></div>
+            <!-- منتج 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    📱
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">حزمة قوالب إنستغرام كاملة</h3>
+                    <p class="product-description">50 قالب احترافي لإنستغرام - جاهز للتعديل - مناسب لجميع المجالات</p>
+                    <div class="product-price">$29.99</div>
+                    <button class="buy-button" onclick="openPurchaseModal('حزمة قوالب إنستغرام كاملة', 29.99)">شراء الآن</button>
                 </div>
             </div>
 
-            <div class="property-group">
-                <label>لون الخلفية:</label>
-                <div class="color-palette">
-                    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ccc;" onclick="setBackgroundColor('#FFFFFF')"></div>
-                    <div class="color-swatch" style="background: #F8FAFC;" onclick="setBackgroundColor('#F8FAFC')"></div>
-                    <div class="color-swatch" style="background: #7C3AED;" onclick="setBackgroundColor('#7C3AED')"></div>
-                    <div class="color-swatch" style="background: #06B6D4;" onclick="setBackgroundColor('#06B6D4')"></div>
-                    <div class="color-swatch" style="background: #F59E0B;" onclick="setBackgroundColor('#F59E0B')"></div>
-                    <div class="color-swatch" style="background: #1E1B4B;" onclick="setBackgroundColor('#1E1B4B')"></div>
-                    <div class="color-swatch" style="background: #000000;" onclick="setBackgroundColor('#000000')"></div>
-                    <div class="color-swatch" style="background: linear-gradient(135deg, #7C3AED, #06B6D4);" onclick="setBackgroundColor('linear-gradient(135deg, #7C3AED, #06B6D4)')"></div>
+            <!-- منتج 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    📊
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">قوالب عروض تقديمية</h3>
+                    <p class="product-description">30 تصميم احترافي للعروض التقديمية - بوربوينت وجوجل سلايدز</p>
+                    <div class="product-price">$39.99</div>
+                    <button class="buy-button" onclick="openPurchaseModal('قوالب عروض تقديمية', 39.99)">شراء الآن</button>
                 </div>
             </div>
 
-            <div class="property-group">
-                <button class="tool-btn" onclick="deleteSelected()">🗑️ حذف العنصر المحدد</button>
-                <button class="tool-btn" onclick="clearCanvas()">🗂️ مسح الكل</button>
+            <!-- منتج 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    🎨
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">حزمة خطوط عربية احترافية</h3>
+                    <p class="product-description">15 خط عربي مميز - تراخيص تجارية - مناسب للعلامات التجارية</p>
+                    <div class="product-price">$49.99</div>
+                    <button class="buy-button" onclick="openPurchaseModal('حزمة خطوط عربية احترافية', 49.99)">شراء الآن</button>
+                </div>
+            </div>
+
+            <!-- منتج 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    📝
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">قوبات سيرة ذاتية</h3>
+                    <p class="product-description">20 تصميم سيرة ذاتية - قابل للتعديل - مناسب لجميع التخصصات</p>
+                    <div class="product-price">$19.99</div>
+                    <button class="buy-button" onclick="openPurchaseModal('قوالب سيرة ذاتية', 19.99)">شراء الآن</button>
+                </div>
+            </div>
+
+            <!-- منتج 5 -->
+            <div class="product-card">
+                <div class="product-image">
+                    🏪
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">قوالب متاجر إلكترونية</h3>
+                    <p class="product-description">10 تصميم متاجر - متوافق مع Shopify و WooCommerce - جاهز للاستخدام</p>
+                    <div class="product-price">$59.99</div>
+                    <button class="buy-button" onclick="openPurchaseModal('قوالب متاجر إلكترونية', 59.99)">شراء الآن</button>
+                </div>
+            </div>
+
+            <!-- منتج 6 -->
+            <div class="product-card">
+                <div class="product-image">
+                    📧
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">قوالب رسائل بريد إلكتروني</h3>
+                    <p class="product-description">25 تصميم بريد إلكتروني - مناسب للتسويق - جاهز للاستخدام</p>
+                    <div class="product-price">$24.99</div>
+                    <button class="buy-button" onclick="openPurchaseModal('قوالب رسائل بريد إلكتروني', 24.99)">شراء الآن</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section class="features" id="features">
+        <h2 class="section-title">⭐ لماذا تختار أبداع؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">تسليم فوري</h3>
+                <p>احصل على المنتج فور الدفع - لا حاجة للانتظار</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">تراخيص تجارية</h3>
+                <p>جميع المنتجات مرخصة للاستخدام التجاري</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📞</div>
+                <h3 class="feature-title">دعم فني</h3>
+                <p>دعم فني متواصل لمساعدتك في التخصيص</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">تحديثات مجانية</h3>
+                <p>جميع التحديثات المستقبلية مجانية</p>
             </div>
         </div>
+    </section>
 
-        <!-- منطقة العمل -->
-        <div class="workspace">
-            <div id="canvas-container"></div>
-        </div>
+    <!-- الفوتر -->
+    <footer class="footer" id="contact">
+        <h3>أبداع - متجر القوالب العربية</h3>
+        <p>📍 المملكة العربية السعودية</p>
+        <p>📧 info@abdaa.com</p>
+        <p>📞 +966 50 123 4567</p>
+        <p style="margin-top: 2rem; opacity: 0.8;">© 2024 أبداع. جميع الحقوق محفوظة.</p>
+    </footer>
 
-        <!-- الشريط الجانبي -->
-        <div class="sidebar">
-            <!-- أدوات التصميم -->
-            <div class="tool-section">
-                <h3>🛠️ أدوات التصميم</h3>
-                <button class="tool-btn" onclick="addText()">✏️ إضافة نص</button>
-                <button class="tool-btn" onclick="addRectangle()">⬜ إضافة مستطيل</button>
-                <button class="tool-btn" onclick="addCircle()">⭕ إضافة دائرة</button>
-                <button class="tool-btn" onclick="addImage()">🖼️ إضافة صورة</button>
-            </div>
-
-            <!-- القوالب الجاهزة -->
-            <div class="tool-section">
-                <h3>🎨 قوالب جاهزة</h3>
-                <div class="templates-grid">
-                    <div class="template-item" onclick="applyTemplate('instagram')">
-                        <div class="template-icon">📱</div>
-                        <div>إنستغرام</div>
-                    </div>
-                    <div class="template-item" onclick="applyTemplate('facebook')">
-                        <div class="template-icon">📘</div>
-                        <div>فيسبوك</div>
-                    </div>
-                    <div class="template-item" onclick="applyTemplate('youtube')">
-                        <div class="template-icon">📺</div>
-                        <div>يوتيوب</div>
-                    </div>
-                    <div class="template-item" onclick="applyTemplate('story')">
-                        <div class="template-icon">📸</div>
-                        <div>ستوري</div>
-                    </div>
+    <!-- نموذج الشراء -->
+    <div class="purchase-modal" id="purchaseModal">
+        <div class="modal-content">
+            <h2 id="modalProductTitle">اسم المنتج</h2>
+            <p id="modalProductPrice">$0.00</p>
+            
+            <div style="margin: 2rem 0;">
+                <h3>اختر طريقة الدفع:</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0;">
+                    <button class="buy-button" onclick="processPayment('paypal')">💳 PayPal</button>
+                    <button class="buy-button" onclick="processPayment('stripe')">💳 بطاقة ائتمان</button>
+                    <button class="buy-button" onclick="processPayment('bank')">🏦 تحويل بنكي</button>
                 </div>
             </div>
 
-            <!-- المساعد الذكي -->
-            <div class="tool-section">
-                <h3>🤖 المساعد الذكي</h3>
-                <button class="tool-btn" onclick="generateAISuggestion()">💡 اقتراح تصميم</button>
-                <button class="tool-btn" onclick="analyzeDesign()">🔍 تحليل التصميم</button>
-                <button class="tool-btn" onclick="autoArrange()">⚡ ترتيب تلقائي</button>
-            </div>
-
-            <!-- الإحصائيات -->
-            <div class="tool-section">
-                <h3>📊 الإحصائيات</h3>
-                <div style="color: var(--light); font-size: 0.9rem;">
-                    <div>العناصر: <span id="elements-count">0</span></div>
-                    <div>الحالة: <span id="design-status">جاهز</span></div>
-                </div>
-            </div>
+            <button class="buy-button" style="background: #64748B;" onclick="closePurchaseModal()">إلغاء</button>
         </div>
     </div>
 
-    <!-- نظام الذكاء الاصطناعي -->
     <script>
-        // المتغيرات العامة
-        let stage, layer;
-        let selectedShape = null;
-        let elements = [];
+        // متغيرات المنتج الحالي
+        let currentProduct = {
+            name: '',
+            price: 0
+        };
 
-        // تهيئة المحرر
-        function initEditor() {
-            stage = new Konva.Stage({
-                container: 'canvas-container',
-                width: document.getElementById('canvas-container').offsetWidth,
-                height: document.getElementById('canvas-container').offsetHeight
+        // التمرير إلى المنتجات
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ 
+                behavior: 'smooth' 
             });
-
-            layer = new Konva.Layer();
-            stage.add(layer);
-
-            // تحديث الإحصائيات
-            updateStats();
         }
 
-        // إضافة نص
-        function addText() {
-            const text = new Konva.Text({
-                x: 50,
-                y: 50,
-                text: 'اكتب نصك هنا...',
-                fontSize: 24,
-                fontFamily: 'Arial',
-                fill: '#000000',
-                draggable: true
-            });
+        // فتح نموذج الشراء
+        function openPurchaseModal(productName, productPrice) {
+            currentProduct = {
+                name: productName,
+                price: productPrice
+            };
 
-            layer.add(text);
-            layer.draw();
-            updateStats();
+            document.getElementById('modalProductTitle').textContent = productName;
+            document.getElementById('modalProductPrice').textContent = `$${productPrice}`;
+            document.getElementById('purchaseModal').style.display = 'flex';
         }
 
-        // إضافة مستطيل
-        function addRectangle() {
-            const rect = new Konva.Rect({
-                x: 100,
-                y: 100,
-                width: 200,
-                height: 150,
-                fill: '#7C3AED',
-                stroke: '#000000',
-                strokeWidth: 2,
-                draggable: true
-            });
-
-            layer.add(rect);
-            layer.draw();
-            updateStats();
+        // إغلاق نموذج الشراء
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
         }
 
-        // إضافة دائرة
-        function addCircle() {
-            const circle = new Konva.Circle({
-                x: 200,
-                y: 200,
-                radius: 80,
-                fill: '#06B6D4',
-                stroke: '#000000',
-                strokeWidth: 2,
-                draggable: true
-            });
-
-            layer.add(circle);
-            layer.draw();
-            updateStats();
-        }
-
-        // إضافة صورة
-        function addImage() {
-            alert('🚧 ميزة إضافة الصور قريباً!');
-        }
-
-        // تطبيق قالب
-        function applyTemplate(templateType) {
-            clearCanvas();
+        // معالجة الدفع
+        function processPayment(method) {
+            alert(`🚀 جاري توجيهك لصفحة الدفع...\n\nالمنتج: ${currentProduct.name}\nالسعر: $${currentProduct.price}\nطريقة الدفع: ${method}`);
             
-            switch(templateType) {
-                case 'instagram':
-                    addText();
-                    break;
-                case 'facebook':
-                    addRectangle();
-                    break;
-                case 'youtube':
-                    addCircle();
-                    break;
-                case 'story':
-                    // تصميم للستوري
-                    const bg = new Konva.Rect({
-                        x: 0,
-                        y: 0,
-                        width: stage.width(),
-                        height: stage.height(),
-                        fill: 'linear-gradient(135deg, #7C3AED, #06B6D4)'
-                    });
-                    layer.add(bg);
-                    break;
+            // محاكاة عملية الدفع
+            setTimeout(() => {
+                alert(`✅ تمت عملية الشراء بنجاح!\n\nسيصلك رابط التحميل على بريدك الإلكتروني خلال دقائق.`);
+                closePurchaseModal();
+            }, 2000);
+        }
+
+        // إغلاق النموذج عند النقر خارج المحتوى
+        document.getElementById('purchaseModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePurchaseModal();
             }
-            
-            layer.draw();
-            updateStats();
-        }
+        });
 
-        // تحديث النص المحدد
-        function updateSelectedText() {
-            // سيتم تطويره لاحقاً
-        }
-
-        // تحديث حجم الخط
-        function updateFontSize() {
-            // سيتم تطويره لاحقاً
-        }
-
-        // تعيين لون النص
-        function setTextColor(color) {
-            // سيتم تطويره لاحقاً
-        }
-
-        // تعيين لون الخلفية
-        function setBackgroundColor(color) {
-            document.getElementById('canvas-container').style.background = color;
-        }
-
-        // حذف العنصر المحدد
-        function deleteSelected() {
-            // سيتم تطويره لاحقاً
-        }
-
-        // مسح الكل
-        function clearCanvas() {
-            layer.destroyChildren();
-            layer.draw();
-            updateStats();
-        }
-
-        // حفظ المشروع
-        function saveProject() {
-            const projectData = stage.toJSON();
-            localStorage.setItem('abdaa_project', JSON.stringify(projectData));
-            alert('✅ تم حفظ المشروع بنجاح!');
-        }
-
-        // تحميل المشروع
-        function loadProject() {
-            const saved = localStorage.getItem('abdaa_project');
-            if (saved) {
-                stage.destroy();
-                initEditor();
-                stage = Konva.Node.create(JSON.parse(saved), 'canvas-container');
-                alert('✅ تم تحميل المشروع!');
+        // تأثيرات عند التمرير
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255,255,255,0.95)';
             } else {
-                alert('❌ لا توجد مشاريع محفوظة');
+                navbar.style.background = 'white';
             }
-        }
-
-        // تصدير التصميم
-        function exportDesign() {
-            const dataURL = stage.toDataURL();
-            const link = document.createElement('a');
-            link.download = 'تصميم-أبداع.png';
-            link.href = dataURL;
-            link.click();
-        }
-
-        // المساعد الذكي
-        function generateAISuggestion() {
-            const suggestions = [
-                "جرب إضافة تدرج ألوان أزرق وبنفسجي للخلفية",
-                "استخدم خطاً عربياً جميلاً للعناوين",
-                "أضف مساحات بيضاء لتحسين التنفس البصري",
-                "جرب تنسيق النصوص بمحاذاة اليمين للعربية"
-            ];
-            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-            alert(`🤖 اقتراح الذكاء الاصطناعي:\n\n${randomSuggestion}`);
-        }
-
-        function analyzeDesign() {
-            const elementCount = layer.children.length;
-            let analysis = `📊 تحليل التصميم:\n\n`;
-            analysis += `• عدد العناصر: ${elementCount}\n`;
-            analysis += `• الحالة: ${elementCount > 3 ? 'مزدحم' : 'متوازن'}\n`;
-            analysis += `• التوصية: ${elementCount === 0 ? 'أضف بعض العناصر' : 'تصميم جيد!'}`;
-            alert(analysis);
-        }
-
-        function autoArrange() {
-            alert('⚡ جاري ترتيب العناصر تلقائياً...');
-            // سيتم تطويره لاحقاً
-        }
-
-        // تحديث الإحصائيات
-        function updateStats() {
-            const count = layer.children.length;
-            document.getElementById('elements-count').textContent = count;
-            document.getElementById('design-status').textContent = 
-                count === 0 ? 'جاهز' : count > 5 ? 'مشغول' : 'نشط';
-        }
-
-        // بدء التشغيل
-        document.addEventListener('DOMContentLoaded', function() {
-            initEditor();
-            
-            // تحديث حجم المسرح عند تغيير حجم النافذة
-            window.addEventListener('resize', function() {
-                stage.width(document.getElementById('canvas-container').offsetWidth);
-                stage.height(document.getElementById('canvas-container').offsetHeight);
-                stage.draw();
-            });
         });
     </script>
 </body>
