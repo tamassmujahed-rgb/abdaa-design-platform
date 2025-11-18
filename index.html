@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أبداع - متجر القوالب العربية</title>
+    <title>مصمم الشعارات العربي - صمم شعارك الاحترافي مجاناً</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,28 +18,28 @@
             --primary: #7C3AED;
             --secondary: #06B6D4;
             --accent: #F59E0B;
+            --success: #10B981;
+            --danger: #EF4444;
             --dark: #1E1B4B;
             --light: #F8FAFC;
         }
 
         body {
-            background: #F8FAFC;
-            color: #1E1B4B;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
         }
 
         /* شريط التنقل */
         .navbar {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .logo {
@@ -66,403 +68,623 @@
 
         /* الهيرو */
         .hero {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
-            color: white;
-            padding: 8rem 2rem 4rem;
             text-align: center;
+            padding: 4rem 2rem 2rem;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #E2E8F0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto 2rem;
         }
 
-        .cta-button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.3s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* قسم المنتجات */
-        .products {
-            padding: 4rem 2rem;
-            max-width: 1200px;
+        /* المحتوى الرئيسي */
+        .main-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+
+        /* لوحة التحكم */
+        .control-panel {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--dark);
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .input-group {
+            margin-bottom: 1.5rem;
         }
 
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+        .input-group label {
+            display: block;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-image {
+        .input-group input,
+        .input-group select {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        /* ألوان */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.active {
+            border-color: white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        /* أنماط الشعارات */
+        .logo-styles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .style-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .style-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .style-option.active {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: var(--primary);
+        }
+
+        /* أزرار التحكم */
+        .control-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            font-size: 3rem;
         }
 
-        .product-content {
-            padding: 1.5rem;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
         }
 
-        .product-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
+        .btn-success {
+            background: var(--success);
+            color: white;
         }
 
-        .product-description {
-            color: #64748B;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
             color: var(--primary);
-            margin-bottom: 1rem;
         }
 
-        .buy-button {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .buy-button:hover {
-            background: var(--secondary);
-        }
-
-        /* قسم المميزات */
-        .features {
-            background: white;
-            padding: 4rem 2rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            text-align: center;
+        /* منطقة المعاينة */
+        .preview-area {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
             padding: 2rem;
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        /* الفوتر */
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        /* نموذج الشراء */
-        .purchase-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .modal-content {
+        #logoCanvas {
+            width: 400px;
+            height: 400px;
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .logo-element {
+            font-weight: bold;
             text-align: center;
+            padding: 2rem;
+        }
+
+        /* قسم الإعلانات */
+        .ads-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ad-label {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        /* الإحصائيات */
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* نسخة Pro */
+        .pro-banner {
+            background: linear-gradient(135deg, var(--accent), #EF4444);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .pro-banner:hover {
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
     <!-- شريط التنقل -->
     <nav class="navbar">
-        <div class="logo">أبداع</div>
+        <div class="logo">
+            <i class="fas fa-palette"></i> مصمم الشعارات
+        </div>
         <div class="nav-links">
-            <a href="#products">المنتجات</a>
-            <a href="#features">المميزات</a>
-            <a href="#contact">اتصل بنا</a>
+            <a href="#"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="#"><i class="fas fa-star"></i> الإصدار Pro</a>
+            <a href="#"><i class="fas fa-envelope"></i> اتصل بنا</a>
         </div>
     </nav>
 
-    <!-- قسم الهيرو -->
+    <!-- الهيرو -->
     <section class="hero">
-        <h1>متجر القوالب العربية الرقمية</h1>
-        <p>أول متجر عربي متخصص في بيع القوالب الجاهزة والمنتجات الرقمية للتصميم والمحتوى</p>
-        <button class="cta-button" onclick="scrollToProducts()">🚀 استعرض المنتجات</button>
+        <h1>صمم شعارك الاحترافي في ثواني</h1>
+        <p>أول منصة عربية لتصميم الشعارات باستخدام الذكاء الاصطناعي - مجاني تماماً</p>
     </section>
 
-    <!-- قسم المنتجات -->
-    <section class="products" id="products">
-        <h2 class="section-title">🛍️ منتجاتنا الرقمية</h2>
-        <div class="products-grid">
-            
-            <!-- منتج 1 -->
-            <div class="product-card">
-                <div class="product-image">
-                    📱
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">حزمة قوالب إنستغرام كاملة</h3>
-                    <p class="product-description">50 قالب احترافي لإنستغرام - جاهز للتعديل - مناسب لجميع المجالات</p>
-                    <div class="product-price">$29.99</div>
-                    <button class="buy-button" onclick="openPurchaseModal('حزمة قوالب إنستغرام كاملة', 29.99)">شراء الآن</button>
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <!-- لوحة التحكم -->
+        <div class="control-panel">
+            <!-- نص الشعار -->
+            <div class="input-group">
+                <label for="logoText"><i class="fas fa-font"></i> نص الشعار</label>
+                <input type="text" id="logoText" placeholder="اسم شركتك أو علامتك..." value="شركتي" maxlength="20">
+            </div>
+
+            <!-- لون الخلفية -->
+            <div class="input-group">
+                <label><i class="fas fa-fill-drip"></i> لون الخلفية</label>
+                <div class="color-palette">
+                    <div class="color-swatch active" style="background: #7C3AED;" data-color="#7C3AED"></div>
+                    <div class="color-swatch" style="background: #06B6D4;" data-color="#06B6D4"></div>
+                    <div class="color-swatch" style="background: #F59E0B;" data-color="#F59E0B"></div>
+                    <div class="color-swatch" style="background: #10B981;" data-color="#10B981"></div>
+                    <div class="color-swatch" style="background: #EF4444;" data-color="#EF4444"></div>
+                    <div class="color-swatch" style="background: #8B5CF6;" data-color="#8B5CF6"></div>
+                    <div class="color-swatch" style="background: #1E1B4B;" data-color="#1E1B4B"></div>
+                    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ccc;" data-color="#FFFFFF"></div>
                 </div>
             </div>
 
-            <!-- منتج 2 -->
-            <div class="product-card">
-                <div class="product-image">
-                    📊
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">قوالب عروض تقديمية</h3>
-                    <p class="product-description">30 تصميم احترافي للعروض التقديمية - بوربوينت وجوجل سلايدز</p>
-                    <div class="product-price">$39.99</div>
-                    <button class="buy-button" onclick="openPurchaseModal('قوالب عروض تقديمية', 39.99)">شراء الآن</button>
-                </div>
-            </div>
-
-            <!-- منتج 3 -->
-            <div class="product-card">
-                <div class="product-image">
-                    🎨
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">حزمة خطوط عربية احترافية</h3>
-                    <p class="product-description">15 خط عربي مميز - تراخيص تجارية - مناسب للعلامات التجارية</p>
-                    <div class="product-price">$49.99</div>
-                    <button class="buy-button" onclick="openPurchaseModal('حزمة خطوط عربية احترافية', 49.99)">شراء الآن</button>
+            <!-- لون النص -->
+            <div class="input-group">
+                <label><i class="fas fa-paint-brush"></i> لون النص</label>
+                <div class="color-palette">
+                    <div class="color-swatch active" style="background: #FFFFFF; border: 1px solid #ccc;" data-text-color="#FFFFFF"></div>
+                    <div class="color-swatch" style="background: #1E1B4B;" data-text-color="#1E1B4B"></div>
+                    <div class="color-swatch" style="background: #000000;" data-text-color="#000000"></div>
+                    <div class="color-swatch" style="background: #F59E0B;" data-text-color="#F59E0B"></div>
+                    <div class="color-swatch" style="background: #10B981;" data-text-color="#10B981"></div>
+                    <div class="color-swatch" style="background: #EF4444;" data-text-color="#EF4444"></div>
+                    <div class="color-swatch" style="background: #7C3AED;" data-text-color="#7C3AED"></div>
+                    <div class="color-swatch" style="background: #06B6D4;" data-text-color="#06B6D4"></div>
                 </div>
             </div>
 
-            <!-- منتج 4 -->
-            <div class="product-card">
-                <div class="product-image">
-                    📝
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">قوبات سيرة ذاتية</h3>
-                    <p class="product-description">20 تصميم سيرة ذاتية - قابل للتعديل - مناسب لجميع التخصصات</p>
-                    <div class="product-price">$19.99</div>
-                    <button class="buy-button" onclick="openPurchaseModal('قوالب سيرة ذاتية', 19.99)">شراء الآن</button>
-                </div>
-            </div>
-
-            <!-- منتج 5 -->
-            <div class="product-card">
-                <div class="product-image">
-                    🏪
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">قوالب متاجر إلكترونية</h3>
-                    <p class="product-description">10 تصميم متاجر - متوافق مع Shopify و WooCommerce - جاهز للاستخدام</p>
-                    <div class="product-price">$59.99</div>
-                    <button class="buy-button" onclick="openPurchaseModal('قوالب متاجر إلكترونية', 59.99)">شراء الآن</button>
+            <!-- نمط الشعار -->
+            <div class="input-group">
+                <label><i class="fas fa-shapes"></i> نمط الشعار</label>
+                <div class="logo-styles">
+                    <div class="style-option active" data-style="modern">
+                        <i class="fas fa-city" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <div>حديث</div>
+                    </div>
+                    <div class="style-option" data-style="classic">
+                        <i class="fas fa-crown" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <div>تقليدي</div>
+                    </div>
+                    <div class="style-option" data-style="minimal">
+                        <i class="fas fa-minimize" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <div>بسيط</div>
+                    </div>
+                    <div class="style-option" data-style="elegant">
+                        <i class="fas fa-gem" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <div>أنيق</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- منتج 6 -->
-            <div class="product-card">
-                <div class="product-image">
-                    📧
+            <!-- حجم النص -->
+            <div class="input-group">
+                <label for="fontSize"><i class="fas fa-text-height"></i> حجم النص</label>
+                <input type="range" id="fontSize" min="20" max="60" value="36">
+                <span id="fontSizeValue">36px</span>
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="control-buttons">
+                <button class="btn btn-primary" onclick="generateLogo()">
+                    <i class="fas fa-magic"></i> توليد شعار
+                </button>
+                <button class="btn btn-success" onclick="downloadLogo()">
+                    <i class="fas fa-download"></i> تحميل الشعار
+                </button>
+                <button class="btn btn-outline" onclick="shareLogo()">
+                    <i class="fas fa-share"></i> مشاركة
+                </button>
+            </div>
+
+            <!-- الإحصائيات -->
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="designsCount">1,247</div>
+                    <div class="stat-label">شعار مصمم</div>
                 </div>
-                <div class="product-content">
-                    <h3 class="product-title">قوالب رسائل بريد إلكتروني</h3>
-                    <p class="product-description">25 تصميم بريد إلكتروني - مناسب للتسويق - جاهز للاستخدام</p>
-                    <div class="product-price">$24.99</div>
-                    <button class="buy-button" onclick="openPurchaseModal('قوالب رسائل بريد إلكتروني', 24.99)">شراء الآن</button>
+                <div class="stat-item">
+                    <div class="stat-number" id="usersCount">893</div>
+                    <div class="stat-label">مستخدم نشط</div>
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- قسم المميزات -->
-    <section class="features" id="features">
-        <h2 class="section-title">⭐ لماذا تختار أبداع؟</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3 class="feature-title">تسليم فوري</h3>
-                <p>احصل على المنتج فور الدفع - لا حاجة للانتظار</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3 class="feature-title">تراخيص تجارية</h3>
-                <p>جميع المنتجات مرخصة للاستخدام التجاري</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📞</div>
-                <h3 class="feature-title">دعم فني</h3>
-                <p>دعم فني متواصل لمساعدتك في التخصيص</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔄</div>
-                <h3 class="feature-title">تحديثات مجانية</h3>
-                <p>جميع التحديثات المستقبلية مجانية</p>
+            <!-- نسخة Pro -->
+            <div class="pro-banner" onclick="showProVersion()">
+                <h3><i class="fas fa-crown"></i> الإصدار Pro</h3>
+                <p>ميزات متقدمة ب $9.99 فقط</p>
             </div>
         </div>
-    </section>
 
-    <!-- الفوتر -->
-    <footer class="footer" id="contact">
-        <h3>أبداع - متجر القوالب العربية</h3>
-        <p>📍 المملكة العربية السعودية</p>
-        <p>📧 info@abdaa.com</p>
-        <p>📞 +966 50 123 4567</p>
-        <p style="margin-top: 2rem; opacity: 0.8;">© 2024 أبداع. جميع الحقوق محفوظة.</p>
-    </footer>
-
-    <!-- نموذج الشراء -->
-    <div class="purchase-modal" id="purchaseModal">
-        <div class="modal-content">
-            <h2 id="modalProductTitle">اسم المنتج</h2>
-            <p id="modalProductPrice">$0.00</p>
-            
-            <div style="margin: 2rem 0;">
-                <h3>اختر طريقة الدفع:</h3>
-                <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0;">
-                    <button class="buy-button" onclick="processPayment('paypal')">💳 PayPal</button>
-                    <button class="buy-button" onclick="processPayment('stripe')">💳 بطاقة ائتمان</button>
-                    <button class="buy-button" onclick="processPayment('bank')">🏦 تحويل بنكي</button>
+        <!-- منطقة المعاينة -->
+        <div class="preview-area">
+            <div id="logoCanvas">
+                <div class="logo-element" id="logoElement">
+                    شركتي
                 </div>
             </div>
 
-            <button class="buy-button" style="background: #64748B;" onclick="closePurchaseModal()">إلغاء</button>
+            <!-- إعلانات -->
+            <div class="ads-section">
+                <div class="ad-label">إعلان</div>
+                <p>🛑 هذا الإعلان يساعد في استمرارية الخدمة المجانية</p>
+                <small>الإصدار Pro يزيل الإعلانات</small>
+            </div>
         </div>
     </div>
 
     <script>
-        // متغيرات المنتج الحالي
-        let currentProduct = {
-            name: '',
-            price: 0
+        // حالة التصميم الحالية
+        let currentDesign = {
+            text: 'شركتي',
+            backgroundColor: '#7C3AED',
+            textColor: '#FFFFFF',
+            style: 'modern',
+            fontSize: 36
         };
 
-        // التمرير إلى المنتجات
-        function scrollToProducts() {
-            document.getElementById('products').scrollIntoView({ 
-                behavior: 'smooth' 
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLogo();
+            setupEventListeners();
+            simulateRealTimeStats();
+        });
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // نص الشعار
+            document.getElementById('logoText').addEventListener('input', function(e) {
+                currentDesign.text = e.target.value || 'شركتي';
+                updateLogo();
+            });
+
+            // ألوان الخلفية
+            document.querySelectorAll('.color-palette:first-child .color-swatch').forEach(swatch => {
+                swatch.addEventListener('click', function() {
+                    document.querySelectorAll('.color-palette:first-child .color-swatch').forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                    currentDesign.backgroundColor = this.getAttribute('data-color');
+                    updateLogo();
+                });
+            });
+
+            // ألوان النص
+            document.querySelectorAll('.color-palette:last-child .color-swatch').forEach(swatch => {
+                swatch.addEventListener('click', function() {
+                    document.querySelectorAll('.color-palette:last-child .color-swatch').forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                    currentDesign.textColor = this.getAttribute('data-text-color');
+                    updateLogo();
+                });
+            });
+
+            // أنماط الشعارات
+            document.querySelectorAll('.style-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.style-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    currentDesign.style = this.getAttribute('data-style');
+                    updateLogo();
+                });
+            });
+
+            // حجم الخط
+            document.getElementById('fontSize').addEventListener('input', function(e) {
+                currentDesign.fontSize = parseInt(e.target.value);
+                document.getElementById('fontSizeValue').textContent = currentDesign.fontSize + 'px';
+                updateLogo();
             });
         }
 
-        // فتح نموذج الشراء
-        function openPurchaseModal(productName, productPrice) {
-            currentProduct = {
-                name: productName,
-                price: productPrice
-            };
-
-            document.getElementById('modalProductTitle').textContent = productName;
-            document.getElementById('modalProductPrice').textContent = `$${productPrice}`;
-            document.getElementById('purchaseModal').style.display = 'flex';
-        }
-
-        // إغلاق نموذج الشراء
-        function closePurchaseModal() {
-            document.getElementById('purchaseModal').style.display = 'none';
-        }
-
-        // معالجة الدفع
-        function processPayment(method) {
-            alert(`🚀 جاري توجيهك لصفحة الدفع...\n\nالمنتج: ${currentProduct.name}\nالسعر: $${currentProduct.price}\nطريقة الدفع: ${method}`);
+        // تحديث الشعار
+        function updateLogo() {
+            const logoElement = document.getElementById('logoElement');
             
-            // محاكاة عملية الدفع
-            setTimeout(() => {
-                alert(`✅ تمت عملية الشراء بنجاح!\n\nسيصلك رابط التحميل على بريدك الإلكتروني خلال دقائق.`);
-                closePurchaseModal();
-            }, 2000);
+            // تطبيق التصميم
+            logoElement.textContent = currentDesign.text;
+            logoElement.style.color = currentDesign.textColor;
+            logoElement.style.fontSize = currentDesign.fontSize + 'px';
+            document.getElementById('logoCanvas').style.background = currentDesign.backgroundColor;
+
+            // تطبيق الأنماط
+            applyStyle(currentDesign.style);
         }
 
-        // إغلاق النموذج عند النقر خارج المحتوى
-        document.getElementById('purchaseModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePurchaseModal();
-            }
-        });
+        // تطبيق النمط
+        function applyStyle(style) {
+            const logoElement = document.getElementById('logoElement');
+            
+            // إعادة تعيين الأنماط
+            logoElement.style.fontFamily = 'Arial';
+            logoElement.style.fontWeight = 'bold';
+            logoElement.style.textShadow = 'none';
+            logoElement.style.border = 'none';
+            logoElement.style.padding = '2rem';
 
-        // تأثيرات عند التمرير
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255,255,255,0.95)';
-            } else {
-                navbar.style.background = 'white';
+            switch(style) {
+                case 'modern':
+                    logoElement.style.fontFamily = 'Segoe UI, sans-serif';
+                    logoElement.style.fontWeight = '800';
+                    logoElement.style.textShadow = '2px 2px 4px rgba(0,0,0,0.3)';
+                    break;
+                case 'classic':
+                    logoElement.style.fontFamily = 'Times New Roman, serif';
+                    logoElement.style.fontWeight = 'bold';
+                    logoElement.style.border = '3px solid ' + currentDesign.textColor;
+                    logoElement.style.padding = '1.5rem';
+                    break;
+                case 'minimal':
+                    logoElement.style.fontFamily = 'Arial, sans-serif';
+                    logoElement.style.fontWeight = '300';
+                    logoElement.style.letterSpacing = '2px';
+                    break;
+                case 'elegant':
+                    logoElement.style.fontFamily = 'Georgia, serif';
+                    logoElement.style.fontStyle = 'italic';
+                    logoElement.style.textShadow = '0 2px 8px rgba(0,0,0,0.2)';
+                    break;
             }
-        });
+        }
+
+        // توليد شعار
+        function generateLogo() {
+            // محاكاة الذكاء الاصطناعي
+            const styles = ['modern', 'classic', 'minimal', 'elegant'];
+            const colors = ['#7C3AED', '#06B6D4', '#F59E0B', '#10B981', '#EF4444'];
+            
+            currentDesign.style = styles[Math.floor(Math.random() * styles.length)];
+            currentDesign.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // تحديث الواجهة
+            document.querySelector(`.style-option[data-style="${currentDesign.style}"]`).click();
+            document.querySelector(`.color-swatch[data-color="${currentDesign.backgroundColor}"]`).click();
+            
+            updateLogo();
+            
+            // زيادة العداد
+            increaseDesignsCount();
+        }
+
+        // تحميل الشعار
+        function downloadLogo() {
+            const logoCanvas = document.getElementById('logoCanvas');
+            
+            html2canvas(logoCanvas).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `شعار-${currentDesign.text}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                
+                // عرض إشعار النسخة Pro
+                setTimeout(() => {
+                    if(Math.random() > 0.7) {
+                        showProVersion();
+                    }
+                }, 1000);
+            });
+        }
+
+        // مشاركة الشعار
+        function shareLogo() {
+            const text = `شاهد الشعار الذي صممته: ${currentDesign.text}`;
+            const url = window.location.href;
+            
+            if(navigator.share) {
+                navigator.share({
+                    title: 'شعار مصمم من منصتنا',
+                    text: text,
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('✅ تم نسخ رابط المشاركة!');
+                });
+            }
+        }
+
+        // عرض النسخة Pro
+        function showProVersion() {
+            const features = [
+                '• جودة عالية (1080p)',
+                '• إزالة الإعلانات',
+                '• +50 قالب احترافي',
+                '• +100 لون متقدم',
+                '• حفظ غير محدود',
+                '• دعم فني متميز'
+            ];
+            
+            alert(`🎉 الإصدار Pro - $9.99 فقط\n\n${features.join('\n')}\n\nارسل رسالة للطلب: pro@abdaa.com`);
+        }
+
+        // محاكاة الإحصائيات الحية
+        function simulateRealTimeStats() {
+            setInterval(() => {
+                const designs = document.getElementById('designsCount');
+                const users = document.getElementById('usersCount');
+                
+                let currentDesigns = parseInt(designs.textContent.replace(',', ''));
+                let currentUsers = parseInt(users.textContent.replace(',', ''));
+                
+                designs.textContent = (currentDesigns + Math.floor(Math.random() * 3)).toLocaleString();
+                users.textContent = (currentUsers + Math.floor(Math.random() * 2)).toLocaleString();
+            }, 5000);
+        }
+
+        // زيادة عداد التصاميم
+        function increaseDesignsCount() {
+            const designs = document.getElementById('designsCount');
+            let current = parseInt(designs.textContent.replace(',', ''));
+            designs.textContent = (current + 1).toLocaleString();
+        }
+
+        // محاكاة الدخل من الإعلانات
+        let adRevenue = 0;
+        setInterval(() => {
+            adRevenue += 0.01; // $0.01 لكل انطباع إعلاني
+            if(adRevenue >= 1) {
+                console.log(`💰 كسبنا $${adRevenue.toFixed(2)} من الإعلانات!`);
+                adRevenue = 0;
+            }
+        }, 30000); // كل 30 ثانية
     </script>
 </body>
 </html>
