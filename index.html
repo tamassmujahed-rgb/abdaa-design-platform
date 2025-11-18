@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أبداع - منصة التصميم العربية المتطورة</title>
+    <title>أبداع - منصة التصميم العربية</title>
+    <script src="https://unpkg.com/konva@8.4.0/konva.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
@@ -24,599 +25,529 @@
             background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
             color: white;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
+        /* شريط التنقل */
         .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(30px);
-            padding: 1rem 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .logo {
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 1.8rem;
+            font-weight: bold;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .nav-links a {
             color: #334155;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--primary);
-            background: rgba(124, 58, 237, 0.1);
-            transform: translateY(-2px);
         }
 
-        .hero {
-            text-align: center;
-            padding: 12rem 2rem 6rem;
-            position: relative;
+        /* المحتوى الرئيسي */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 80px);
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.3) 0%, transparent 50%);
-            animation: float 6s ease-in-out infinite;
+        /* الشريط الجانبي */
+        .sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .tool-section {
+            margin-bottom: 2rem;
         }
 
-        .hero h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #fff, #E2E8F0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            line-height: 1.1;
+        .tool-section h3 {
+            color: var(--light);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
 
-        .hero p {
-            font-size: 1.6rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-
-        .cta-button {
-            background: linear-gradient(45deg, var(--accent), #EF4444);
-            color: white;
-            border: none;
-            padding: 1.5rem 4rem;
-            font-size: 1.4rem;
-            font-weight: 700;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.6);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-            backdrop-filter: blur(25px);
-            padding: 3rem 2rem;
-            border-radius: 25px;
+        .tool-btn {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.3rem 0;
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            transition: all 0.4s ease;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: right;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* منطقة العمل */
+        .workspace {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 1rem;
+            border-radius: 15px;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-        }
-
-        .feature-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-            border-color: rgba(124, 58, 237, 0.5);
-        }
-
-        .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .feature-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--light);
-        }
-
-        .feature-card p {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            line-height: 1.6;
-        }
-
-        .excellence {
-            background: linear-gradient(135deg, var(--light) 0%, #F1F5F9 100%);
-            color: var(--dark);
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-
-        .excellence h2 {
-            font-size: 3.5rem;
-            margin-bottom: 4rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .excellence-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: right;
-        }
-
-        .excellence-item {
+        #canvas-container {
+            width: 100%;
+            height: 100%;
             background: white;
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            border-right: 5px solid var(--primary);
+            border-radius: 12px;
         }
 
-        .excellence-item h3 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+        /* خصائص العناصر */
+        .properties-panel {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .excellence-item ul {
-            list-style: none;
-            padding: 0;
+        .property-group {
+            margin-bottom: 1.5rem;
         }
 
-        .excellence-item li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #E2E8F0;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .excellence-item li:last-child {
-            border-bottom: none;
-        }
-
-        .stats {
-            background: rgba(255,255,255,0.05);
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            padding: 2rem;
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--accent), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .property-group label {
             display: block;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .stat-label {
-            font-size: 1.2rem;
-            opacity: 0.8;
+        .property-group input,
+        .property-group select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
             margin-top: 0.5rem;
+        }
+
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.active {
+            border-color: white;
+        }
+
+        /* القوالب */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .template-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .template-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .template-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
 <body>
+    <!-- شريط التنقل -->
     <nav class="navbar">
-        <div class="logo">
-            <span>أَبْداع</span>
-            <span style="font-size: 1.2rem;">🎨</span>
-        </div>
+        <div class="logo">أَبْداع</div>
         <div class="nav-links">
-            <a href="#">الرئيسية</a>
-            <a href="#">المميزات</a>
-            <a href="#">لماذا نحن؟</a>
-            <a href="#">التسجيل</a>
+            <a href="#" onclick="saveProject()">💾 حفظ</a>
+            <a href="#" onclick="loadProject()">📂 فتح</a>
+            <a href="#" onclick="exportDesign()">📤 تصدير</a>
+            <a href="welcome.html">🏠 الرئيسية</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <h1>مستقبل التصميم<br>بدأ اليوم</h1>
-        <p>أول منصة تصميم عربية تجمع بين القوة والجمال، مصممة لتحقيق إبداعك بدون حدود</p>
-        <button class="cta-button">ابدأ رحلتك الإبداعية ←</button>
-    </section>
-
-    <section class="features">
-        <div class="feature-card">
-            <span class="feature-icon">🚀</span>
-            <h3>أداء خارق</h3>
-            <p>أسرع منصة تصميم في العالم، تحميل فوري وتصميم بدون انتظار</p>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">🎯</span>
-            <h3>ذكاء متقدم</h3>
-            <p>مساعد تصميم عربي ذكي يفهم احتياجاتك ويقترح الحلول المثالية</p>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">⚡</span>
-            <h3>واجهة ذكية</h3>
-            <p>تصميم بديهي يجعل الإبداع في متناول الجميع بدون تعقيد</p>
-        </div>
-    </section>
-
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-number">10x</span>
-                <div class="stat-label">أسرع أداء</div>
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <!-- شريط الخصائص -->
+        <div class="properties-panel">
+            <h3>🎛️ خصائص العنصر</h3>
+            
+            <div class="property-group">
+                <label>النص:</label>
+                <input type="text" id="text-input" placeholder="اكتب النص هنا..." onchange="updateSelectedText()">
             </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <div class="stat-label">دعم عربي كامل</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">∞</span>
-                <div class="stat-label">إبداع بدون حدود</div>
-            </div>
-        </div>
-    </section>
 
-    <section class="excellence">
-        <h2>لماذا نتميز؟</h2>
-        <div class="excellence-grid">
-            <div class="excellence-item">
-                <h3>🔄 التطوير المستمر</h3>
-                <ul>
-                    <li>✅ تحديثات أسبوعية</li>
-                    <li>✅ ميزات جديدة باستمرار</li>
-                    <li>✅ استجابة لملاحظاتكم</li>
-                    <li>✅ تطور لا يتوقف</li>
-                </ul>
+            <div class="property-group">
+                <label>حجم الخط:</label>
+                <input type="range" id="font-size" min="10" max="72" value="24" onchange="updateFontSize()">
+                <span id="font-size-value">24px</span>
             </div>
-            <div class="excellence-item">
-                <h3>🎨 الإبداع العربي</h3>
-                <ul>
-                    <li>✅ خطوط عربية حصرية</li>
-                    <li>✅ قوالب مناسبة للثقافة</li>
-                    <li>✅ تصميم من العرب للعرب</li>
-                    <li>✅ فهم للاحتياجات المحلية</li>
-                </ul>
-            </div>
-            <div class="excellence-item">
-                <h3>💎 الجودة المتفوقة</h3>
-                <ul>
-                    <li>✅ تصدير بدقة عالية</li>
-                    <li>✅ أدوات احترافية</li>
-                    <li>✅ دعم فني متميز</li>
-                    <li>✅ تجربة مستخدم فائقة</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- ======== بداية كود الذكاء الاصطناعي ======== -->
-<script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js"></script>
-<script>
-// نظام الذكاء الاصطناعي المتكامل لمنصة أبداع
-console.log('🚀 جاري تحميل نظام الذكاء الاصطناعي...');
 
-// المساعد الأساسي للتصميم
-class SimpleAIAssistant {
-    constructor() {
-        this.suggestions = [
-            "🎨 جرب استخدام تدرج الألوان: #7C3AED → #06B6D4 لمظهر عصري",
-            "📝 للعناوين العربية: استخدم خط 'الرقع' مع حجم 28px",
-            "✨ أضف ظلالاً ناعمة: box-shadow: 0 8px 32px rgba(0,0,0,0.1)",
-            "📱 للموبايل: حافظ على هوامش 16px بين العناصر",
-            "🎯 استخدم التباين العالي بين النص والخلفية لتحسين القراءة"
-        ];
-    }
-
-    generateSuggestion() {
-        return this.suggestions[Math.floor(Math.random() * this.suggestions.length)];
-    }
-
-    generateArabicContent(type) {
-        const content = {
-            headline: [
-                "اكتشف عالم الإبداع بدون حدود",
-                "مستقبل التصميم يبدأ من هنا", 
-                "اصنع التميز بتصميمك الفريد",
-                "منصة عربية، إبداع عالمي"
-            ],
-            slogan: [
-                "جودة لا تضاهى، إبداع لا يتوقف",
-                "حيث يلتقي الإبداع بالبساطة",
-                "من العرب إلى العالم، بصمة إبداعية فريدة"
-            ]
-        };
-        return content[type][Math.floor(Math.random() * content[type].length)];
-    }
-}
-
-// إنشاء واجهة المستخدم البسيطة
-function createSimpleAIDashboard() {
-    const dashboardHTML = `
-        <div id="ai-dashboard" style="
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            border: 2px solid rgba(124, 58, 237, 0.3);
-            max-width: 400px;
-            z-index: 10000;
-            font-family: 'Segoe UI', sans-serif;
-            animation: slideInUp 0.5s ease-out;
-        ">
-            <!-- رأس المساعد -->
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem;">
-                <div style="
-                    width: 50px;
-                    height: 50px;
-                    background: linear-gradient(135deg, #7C3AED, #06B6D4);
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    font-weight: bold;
-                    font-size: 1.5rem;
-                ">🤖</div>
-                <div>
-                    <h3 style="margin: 0; color: #1E1B4B; font-size: 1.3rem; font-weight: 700;">مساعد أبداع الذكي</h3>
-                    <p style="margin: 5px 0 0 0; color: #6B7280; font-size: 0.9rem;">يساعدك في التصميم والإبداع</p>
+            <div class="property-group">
+                <label>لون النص:</label>
+                <div class="color-palette">
+                    <div class="color-swatch active" style="background: #000000;" onclick="setTextColor('#000000')"></div>
+                    <div class="color-swatch" style="background: #7C3AED;" onclick="setTextColor('#7C3AED')"></div>
+                    <div class="color-swatch" style="background: #06B6D4;" onclick="setTextColor('#06B6D4')"></div>
+                    <div class="color-swatch" style="background: #F59E0B;" onclick="setTextColor('#F59E0B')"></div>
+                    <div class="color-swatch" style="background: #059669;" onclick="setTextColor('#059669')"></div>
+                    <div class="color-swatch" style="background: #DC2626;" onclick="setTextColor('#DC2626')"></div>
+                    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ccc;" onclick="setTextColor('#FFFFFF')"></div>
+                    <div class="color-swatch" style="background: #6B7280;" onclick="setTextColor('#6B7280')"></div>
                 </div>
             </div>
-            
-            <!-- منطقة النتائج -->
-            <div id="ai-results" style="
-                background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(6, 182, 212, 0.1));
-                padding: 1.5rem;
-                border-radius: 15px;
-                margin-bottom: 1.5rem;
-                color: #1E1B4B;
-                font-size: 0.95rem;
-                line-height: 1.6;
-                border: 1px solid rgba(124, 58, 237, 0.2);
-                min-height: 100px;
-            ">
-                <div style="text-align: center; color: #6B7280; padding: 1rem;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
-                    <div>مساعد التصميم جاهز لمساعدتك</div>
+
+            <div class="property-group">
+                <label>لون الخلفية:</label>
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ccc;" onclick="setBackgroundColor('#FFFFFF')"></div>
+                    <div class="color-swatch" style="background: #F8FAFC;" onclick="setBackgroundColor('#F8FAFC')"></div>
+                    <div class="color-swatch" style="background: #7C3AED;" onclick="setBackgroundColor('#7C3AED')"></div>
+                    <div class="color-swatch" style="background: #06B6D4;" onclick="setBackgroundColor('#06B6D4')"></div>
+                    <div class="color-swatch" style="background: #F59E0B;" onclick="setBackgroundColor('#F59E0B')"></div>
+                    <div class="color-swatch" style="background: #1E1B4B;" onclick="setBackgroundColor('#1E1B4B')"></div>
+                    <div class="color-swatch" style="background: #000000;" onclick="setBackgroundColor('#000000')"></div>
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #7C3AED, #06B6D4);" onclick="setBackgroundColor('linear-gradient(135deg, #7C3AED, #06B6D4)')"></div>
                 </div>
             </div>
-            
-            <!-- أزرار التحكم -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem;">
-                <button onclick="getDesignSuggestion()" style="
-                    background: linear-gradient(135deg, #7C3AED, #06B6D4);
-                    color: white;
-                    border: none;
-                    padding: 1rem 0.5rem;
-                    border-radius: 12px;
-                    cursor: pointer;
-                    font-weight: 600;
-                    transition: all 0.3s ease;
-                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                    💡 اقتراح تصميم
-                </button>
-                
-                <button onclick="generateHeadline()" style="
-                    background: linear-gradient(135deg, #F59E0B, #EF4444);
-                    color: white;
-                    border: none;
-                    padding: 1rem 0.5rem;
-                    border-radius: 12px;
-                    cursor: pointer;
-                    font-weight: 600;
-                    transition: all 0.3s ease;
-                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                    📰 عنوان جديد
-                </button>
+
+            <div class="property-group">
+                <button class="tool-btn" onclick="deleteSelected()">🗑️ حذف العنصر المحدد</button>
+                <button class="tool-btn" onclick="clearCanvas()">🗂️ مسح الكل</button>
             </div>
-            
-            <!-- إدخال مخصص -->
-            <div style="border-top: 2px solid rgba(0,0,0,0.1); padding-top: 1.5rem;">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="ai-prompt" placeholder="ما الذي تريد إنشاءه؟" style="
-                        flex: 1;
-                        padding: 0.8rem 1rem;
-                        border: 2px solid #E5E7EB;
-                        border-radius: 10px;
-                        font-size: 0.9rem;
-                    ">
-                    <button onclick="handleCustomRequest()" style="
-                        background: #1E1B4B;
-                        color: white;
-                        border: none;
-                        padding: 0.8rem 1.5rem;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        font-weight: 600;
-                    ">إنشاء</button>
+        </div>
+
+        <!-- منطقة العمل -->
+        <div class="workspace">
+            <div id="canvas-container"></div>
+        </div>
+
+        <!-- الشريط الجانبي -->
+        <div class="sidebar">
+            <!-- أدوات التصميم -->
+            <div class="tool-section">
+                <h3>🛠️ أدوات التصميم</h3>
+                <button class="tool-btn" onclick="addText()">✏️ إضافة نص</button>
+                <button class="tool-btn" onclick="addRectangle()">⬜ إضافة مستطيل</button>
+                <button class="tool-btn" onclick="addCircle()">⭕ إضافة دائرة</button>
+                <button class="tool-btn" onclick="addImage()">🖼️ إضافة صورة</button>
+            </div>
+
+            <!-- القوالب الجاهزة -->
+            <div class="tool-section">
+                <h3>🎨 قوالب جاهزة</h3>
+                <div class="templates-grid">
+                    <div class="template-item" onclick="applyTemplate('instagram')">
+                        <div class="template-icon">📱</div>
+                        <div>إنستغرام</div>
+                    </div>
+                    <div class="template-item" onclick="applyTemplate('facebook')">
+                        <div class="template-icon">📘</div>
+                        <div>فيسبوك</div>
+                    </div>
+                    <div class="template-item" onclick="applyTemplate('youtube')">
+                        <div class="template-icon">📺</div>
+                        <div>يوتيوب</div>
+                    </div>
+                    <div class="template-item" onclick="applyTemplate('story')">
+                        <div class="template-icon">📸</div>
+                        <div>ستوري</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المساعد الذكي -->
+            <div class="tool-section">
+                <h3>🤖 المساعد الذكي</h3>
+                <button class="tool-btn" onclick="generateAISuggestion()">💡 اقتراح تصميم</button>
+                <button class="tool-btn" onclick="analyzeDesign()">🔍 تحليل التصميم</button>
+                <button class="tool-btn" onclick="autoArrange()">⚡ ترتيب تلقائي</button>
+            </div>
+
+            <!-- الإحصائيات -->
+            <div class="tool-section">
+                <h3>📊 الإحصائيات</h3>
+                <div style="color: var(--light); font-size: 0.9rem;">
+                    <div>العناصر: <span id="elements-count">0</span></div>
+                    <div>الحالة: <span id="design-status">جاهز</span></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <style>
-            @keyframes slideInUp {
-                from { transform: translateY(100px); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
+    <!-- نظام الذكاء الاصطناعي -->
+    <script>
+        // المتغيرات العامة
+        let stage, layer;
+        let selectedShape = null;
+        let elements = [];
+
+        // تهيئة المحرر
+        function initEditor() {
+            stage = new Konva.Stage({
+                container: 'canvas-container',
+                width: document.getElementById('canvas-container').offsetWidth,
+                height: document.getElementById('canvas-container').offsetHeight
+            });
+
+            layer = new Konva.Layer();
+            stage.add(layer);
+
+            // تحديث الإحصائيات
+            updateStats();
+        }
+
+        // إضافة نص
+        function addText() {
+            const text = new Konva.Text({
+                x: 50,
+                y: 50,
+                text: 'اكتب نصك هنا...',
+                fontSize: 24,
+                fontFamily: 'Arial',
+                fill: '#000000',
+                draggable: true
+            });
+
+            layer.add(text);
+            layer.draw();
+            updateStats();
+        }
+
+        // إضافة مستطيل
+        function addRectangle() {
+            const rect = new Konva.Rect({
+                x: 100,
+                y: 100,
+                width: 200,
+                height: 150,
+                fill: '#7C3AED',
+                stroke: '#000000',
+                strokeWidth: 2,
+                draggable: true
+            });
+
+            layer.add(rect);
+            layer.draw();
+            updateStats();
+        }
+
+        // إضافة دائرة
+        function addCircle() {
+            const circle = new Konva.Circle({
+                x: 200,
+                y: 200,
+                radius: 80,
+                fill: '#06B6D4',
+                stroke: '#000000',
+                strokeWidth: 2,
+                draggable: true
+            });
+
+            layer.add(circle);
+            layer.draw();
+            updateStats();
+        }
+
+        // إضافة صورة
+        function addImage() {
+            alert('🚧 ميزة إضافة الصور قريباً!');
+        }
+
+        // تطبيق قالب
+        function applyTemplate(templateType) {
+            clearCanvas();
+            
+            switch(templateType) {
+                case 'instagram':
+                    addText();
+                    break;
+                case 'facebook':
+                    addRectangle();
+                    break;
+                case 'youtube':
+                    addCircle();
+                    break;
+                case 'story':
+                    // تصميم للستوري
+                    const bg = new Konva.Rect({
+                        x: 0,
+                        y: 0,
+                        width: stage.width(),
+                        height: stage.height(),
+                        fill: 'linear-gradient(135deg, #7C3AED, #06B6D4)'
+                    });
+                    layer.add(bg);
+                    break;
             }
-        </style>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', dashboardHTML);
-}
+            
+            layer.draw();
+            updateStats();
+        }
 
-// إنشاء المساعد
-const aiAssistant = new SimpleAIAssistant();
+        // تحديث النص المحدد
+        function updateSelectedText() {
+            // سيتم تطويره لاحقاً
+        }
 
-// وظائف المساعد
-function getDesignSuggestion() {
-    const resultsElement = document.getElementById('ai-results');
-    const suggestion = aiAssistant.generateSuggestion();
-    
-    resultsElement.innerHTML = `
-        <div style="font-weight: 600; color: #7C3AED; margin-bottom: 0.5rem;">💡 اقتراح تصميم:</div>
-        <div>${suggestion}</div>
-    `;
-}
+        // تحديث حجم الخط
+        function updateFontSize() {
+            // سيتم تطويره لاحقاً
+        }
 
-function generateHeadline() {
-    const resultsElement = document.getElementById('ai-results');
-    const headline = aiAssistant.generateArabicContent('headline');
-    
-    resultsElement.innerHTML = `
-        <div style="font-weight: 600; color: #F59E0B; margin-bottom: 0.5rem;">📰 عنوان مقترح:</div>
-        <div style="font-size: 1.1rem; font-weight: 500;">"${headline}"</div>
-    `;
-}
+        // تعيين لون النص
+        function setTextColor(color) {
+            // سيتم تطويره لاحقاً
+        }
 
-function handleCustomRequest() {
-    const input = document.getElementById('ai-prompt');
-    const prompt = input.value.trim();
-    
-    if (!prompt) {
-        alert('الرجاء إدخال طلب مخصص');
-        return;
-    }
-    
-    const resultsElement = document.getElementById('ai-results');
-    const response = aiAssistant.generateSuggestion();
-    
-    resultsElement.innerHTML = `
-        <div style="font-weight: 600; color: #06B6D4; margin-bottom: 0.5rem;">🎯 استجابة لطلبك:</div>
-        <div>${response}</div>
-        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6B7280;">الطلب: "${prompt}"</div>
-    `;
-    
-    input.value = '';
-}
+        // تعيين لون الخلفية
+        function setBackgroundColor(color) {
+            document.getElementById('canvas-container').style.background = color;
+        }
 
-// بدء التشغيل عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(createSimpleAIDashboard, 2000);
-});
+        // حذف العنصر المحدد
+        function deleteSelected() {
+            // سيتم تطويره لاحقاً
+        }
 
-console.log('✅ نظام الذكاء الاصطناعي جاهز للتشغيل!');
-</script>
-<!-- ======== نهاية كود الذكاء الاصطناعي ======== -->
-    <!-- زر المشاركة -->
-<div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
-    <button onclick="shareSite()" style="
-        background: linear-gradient(135deg, #7C3AED, #06B6D4);
-        color: white;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 50px;
-        cursor: pointer;
-        font-weight: 600;
-        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    ">
-        📤 مشاركة الموقع
-    </button>
-</div>
+        // مسح الكل
+        function clearCanvas() {
+            layer.destroyChildren();
+            layer.draw();
+            updateStats();
+        }
 
-<script>
-function shareSite() {
-    const siteUrl = 'https://tamassmujahed-rgb.github.io/abdaa-design-platform/';
-    const shareText = '🎨 اكتشف "أبداع" - منصة التصميم العربية المتكاملة!';
-    
-    if (navigator.share) {
-        // مشاركة عبر الأجهزة الذكية
-        navigator.share({
-            title: 'أبداع - منصة التصميم العربية',
-            text: shareText,
-            url: siteUrl
+        // حفظ المشروع
+        function saveProject() {
+            const projectData = stage.toJSON();
+            localStorage.setItem('abdaa_project', JSON.stringify(projectData));
+            alert('✅ تم حفظ المشروع بنجاح!');
+        }
+
+        // تحميل المشروع
+        function loadProject() {
+            const saved = localStorage.getItem('abdaa_project');
+            if (saved) {
+                stage.destroy();
+                initEditor();
+                stage = Konva.Node.create(JSON.parse(saved), 'canvas-container');
+                alert('✅ تم تحميل المشروع!');
+            } else {
+                alert('❌ لا توجد مشاريع محفوظة');
+            }
+        }
+
+        // تصدير التصميم
+        function exportDesign() {
+            const dataURL = stage.toDataURL();
+            const link = document.createElement('a');
+            link.download = 'تصميم-أبداع.png';
+            link.href = dataURL;
+            link.click();
+        }
+
+        // المساعد الذكي
+        function generateAISuggestion() {
+            const suggestions = [
+                "جرب إضافة تدرج ألوان أزرق وبنفسجي للخلفية",
+                "استخدم خطاً عربياً جميلاً للعناوين",
+                "أضف مساحات بيضاء لتحسين التنفس البصري",
+                "جرب تنسيق النصوص بمحاذاة اليمين للعربية"
+            ];
+            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+            alert(`🤖 اقتراح الذكاء الاصطناعي:\n\n${randomSuggestion}`);
+        }
+
+        function analyzeDesign() {
+            const elementCount = layer.children.length;
+            let analysis = `📊 تحليل التصميم:\n\n`;
+            analysis += `• عدد العناصر: ${elementCount}\n`;
+            analysis += `• الحالة: ${elementCount > 3 ? 'مزدحم' : 'متوازن'}\n`;
+            analysis += `• التوصية: ${elementCount === 0 ? 'أضف بعض العناصر' : 'تصميم جيد!'}`;
+            alert(analysis);
+        }
+
+        function autoArrange() {
+            alert('⚡ جاري ترتيب العناصر تلقائياً...');
+            // سيتم تطويره لاحقاً
+        }
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            const count = layer.children.length;
+            document.getElementById('elements-count').textContent = count;
+            document.getElementById('design-status').textContent = 
+                count === 0 ? 'جاهز' : count > 5 ? 'مشغول' : 'نشط';
+        }
+
+        // بدء التشغيل
+        document.addEventListener('DOMContentLoaded', function() {
+            initEditor();
+            
+            // تحديث حجم المسرح عند تغيير حجم النافذة
+            window.addEventListener('resize', function() {
+                stage.width(document.getElementById('canvas-container').offsetWidth);
+                stage.height(document.getElementById('canvas-container').offsetHeight);
+                stage.draw();
+            });
         });
-    } else {
-        // نسخ الرابط لل clipboard
-        navigator.clipboard.writeText(siteUrl).then(() => {
-            alert('✅ تم نسخ الرابط! يمكنك مشاركته الآن');
-        });
-    }
-}
-</script>
+    </script>
 </body>
 </html>
