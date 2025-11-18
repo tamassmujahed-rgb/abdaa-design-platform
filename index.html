@@ -367,5 +367,217 @@
             </div>
         </div>
     </section>
+    <!-- ======== بداية كود الذكاء الاصطناعي ======== -->
+<script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js"></script>
+<script>
+// نظام الذكاء الاصطناعي المتكامل لمنصة أبداع
+console.log('🚀 جاري تحميل نظام الذكاء الاصطناعي...');
+
+// المساعد الأساسي للتصميم
+class SimpleAIAssistant {
+    constructor() {
+        this.suggestions = [
+            "🎨 جرب استخدام تدرج الألوان: #7C3AED → #06B6D4 لمظهر عصري",
+            "📝 للعناوين العربية: استخدم خط 'الرقع' مع حجم 28px",
+            "✨ أضف ظلالاً ناعمة: box-shadow: 0 8px 32px rgba(0,0,0,0.1)",
+            "📱 للموبايل: حافظ على هوامش 16px بين العناصر",
+            "🎯 استخدم التباين العالي بين النص والخلفية لتحسين القراءة"
+        ];
+    }
+
+    generateSuggestion() {
+        return this.suggestions[Math.floor(Math.random() * this.suggestions.length)];
+    }
+
+    generateArabicContent(type) {
+        const content = {
+            headline: [
+                "اكتشف عالم الإبداع بدون حدود",
+                "مستقبل التصميم يبدأ من هنا", 
+                "اصنع التميز بتصميمك الفريد",
+                "منصة عربية، إبداع عالمي"
+            ],
+            slogan: [
+                "جودة لا تضاهى، إبداع لا يتوقف",
+                "حيث يلتقي الإبداع بالبساطة",
+                "من العرب إلى العالم، بصمة إبداعية فريدة"
+            ]
+        };
+        return content[type][Math.floor(Math.random() * content[type].length)];
+    }
+}
+
+// إنشاء واجهة المستخدم البسيطة
+function createSimpleAIDashboard() {
+    const dashboardHTML = `
+        <div id="ai-dashboard" style="
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 2px solid rgba(124, 58, 237, 0.3);
+            max-width: 400px;
+            z-index: 10000;
+            font-family: 'Segoe UI', sans-serif;
+            animation: slideInUp 0.5s ease-out;
+        ">
+            <!-- رأس المساعد -->
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem;">
+                <div style="
+                    width: 50px;
+                    height: 50px;
+                    background: linear-gradient(135deg, #7C3AED, #06B6D4);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1.5rem;
+                ">🤖</div>
+                <div>
+                    <h3 style="margin: 0; color: #1E1B4B; font-size: 1.3rem; font-weight: 700;">مساعد أبداع الذكي</h3>
+                    <p style="margin: 5px 0 0 0; color: #6B7280; font-size: 0.9rem;">يساعدك في التصميم والإبداع</p>
+                </div>
+            </div>
+            
+            <!-- منطقة النتائج -->
+            <div id="ai-results" style="
+                background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(6, 182, 212, 0.1));
+                padding: 1.5rem;
+                border-radius: 15px;
+                margin-bottom: 1.5rem;
+                color: #1E1B4B;
+                font-size: 0.95rem;
+                line-height: 1.6;
+                border: 1px solid rgba(124, 58, 237, 0.2);
+                min-height: 100px;
+            ">
+                <div style="text-align: center; color: #6B7280; padding: 1rem;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
+                    <div>مساعد التصميم جاهز لمساعدتك</div>
+                </div>
+            </div>
+            
+            <!-- أزرار التحكم -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem;">
+                <button onclick="getDesignSuggestion()" style="
+                    background: linear-gradient(135deg, #7C3AED, #06B6D4);
+                    color: white;
+                    border: none;
+                    padding: 1rem 0.5rem;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                    💡 اقتراح تصميم
+                </button>
+                
+                <button onclick="generateHeadline()" style="
+                    background: linear-gradient(135deg, #F59E0B, #EF4444);
+                    color: white;
+                    border: none;
+                    padding: 1rem 0.5rem;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                    📰 عنوان جديد
+                </button>
+            </div>
+            
+            <!-- إدخال مخصص -->
+            <div style="border-top: 2px solid rgba(0,0,0,0.1); padding-top: 1.5rem;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="ai-prompt" placeholder="ما الذي تريد إنشاءه؟" style="
+                        flex: 1;
+                        padding: 0.8rem 1rem;
+                        border: 2px solid #E5E7EB;
+                        border-radius: 10px;
+                        font-size: 0.9rem;
+                    ">
+                    <button onclick="handleCustomRequest()" style="
+                        background: #1E1B4B;
+                        color: white;
+                        border: none;
+                        padding: 0.8rem 1.5rem;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-weight: 600;
+                    ">إنشاء</button>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes slideInUp {
+                from { transform: translateY(100px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        </style>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', dashboardHTML);
+}
+
+// إنشاء المساعد
+const aiAssistant = new SimpleAIAssistant();
+
+// وظائف المساعد
+function getDesignSuggestion() {
+    const resultsElement = document.getElementById('ai-results');
+    const suggestion = aiAssistant.generateSuggestion();
+    
+    resultsElement.innerHTML = `
+        <div style="font-weight: 600; color: #7C3AED; margin-bottom: 0.5rem;">💡 اقتراح تصميم:</div>
+        <div>${suggestion}</div>
+    `;
+}
+
+function generateHeadline() {
+    const resultsElement = document.getElementById('ai-results');
+    const headline = aiAssistant.generateArabicContent('headline');
+    
+    resultsElement.innerHTML = `
+        <div style="font-weight: 600; color: #F59E0B; margin-bottom: 0.5rem;">📰 عنوان مقترح:</div>
+        <div style="font-size: 1.1rem; font-weight: 500;">"${headline}"</div>
+    `;
+}
+
+function handleCustomRequest() {
+    const input = document.getElementById('ai-prompt');
+    const prompt = input.value.trim();
+    
+    if (!prompt) {
+        alert('الرجاء إدخال طلب مخصص');
+        return;
+    }
+    
+    const resultsElement = document.getElementById('ai-results');
+    const response = aiAssistant.generateSuggestion();
+    
+    resultsElement.innerHTML = `
+        <div style="font-weight: 600; color: #06B6D4; margin-bottom: 0.5rem;">🎯 استجابة لطلبك:</div>
+        <div>${response}</div>
+        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6B7280;">الطلب: "${prompt}"</div>
+    `;
+    
+    input.value = '';
+}
+
+// بدء التشغيل عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(createSimpleAIDashboard, 2000);
+});
+
+console.log('✅ نظام الذكاء الاصطناعي جاهز للتشغيل!');
+</script>
+<!-- ======== نهاية كود الذكاء الاصطناعي ======== -->
 </body>
 </html>
